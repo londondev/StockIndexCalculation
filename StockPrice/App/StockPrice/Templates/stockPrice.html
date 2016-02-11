@@ -1,0 +1,63 @@
+﻿<h3>Stock Price Upload</h3>
+<div class="container">
+    <form class="form-horizontal">
+        <div class="form-inline">
+            <label for="attachment" class="col-md-2 control-label">Please choose stock data file(csv)</label>
+            <div>
+                <input type="file" name="attachment" class="form-control" data-file-model="stockData.attachment"/>
+                <input type="button" class="btn btn-primary" value="Upload" data-ng-click="saveModel()"/>
+                <div ng-show="isLoading===true"><label class="loadingText">Loading...</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<hr>
+<div class="container" ng-show="hasDataLoaded===true">
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="form-inline">
+                <label class="control-label">Start Date</label>
+                <select name="repeatSelect"  ng-model="startDate" ng-change="populateEndDates()">
+                    <option ng-repeat="item in plotChartCoreData">{{item.Date}}</option>
+                </select>
+                <label class="control-label">End Date</label>
+                <select name="repeatSelect" ng-model="endDate">
+                    <option ng-repeat="date in endDates">{{date}}</option>
+                </select>
+                <input type="button" class="btn btn-primary btn-xs " value="Update Plot Graph" data-ng-click="updateGraph()" />
+            </div>
+            <highchart id="chart1" config="highchartsIndex"></highchart>
+            <highchart id="chart2" config="highchartsPie"></highchart>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Index Name</th>
+                        <th>Date</th>
+                        <th>Stock Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Share</th>
+                        <th>Weight</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="stock in stockDataList">
+                        <td>{{ stock.IndexName }}</td>
+                        <td>{{ stock.Date }}</td>
+                        <td>{{ stock.StockId }}</td>
+                        <td>{{ stock.Name }}</td>
+                        <td>{{ stock.Price }}</td>
+                        <td>{{ stock.Share }}</td>
+                        <td>{{ stock.Weight }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
